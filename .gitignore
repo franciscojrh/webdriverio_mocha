@@ -1,0 +1,5 @@
+.wdio/session/
+.package-lock.json
+allure-reports/
+allure-results/
+node_modules/
