@@ -6,8 +6,40 @@ class HomePage {
 
     async createAccount(username, password) {
         await $('a=Sign up').click();
-        await $('#sign-username').setValue(username);
-        await $('#sign-password').setValue(password);
+
+        const usernameInput = $('#sign-username');
+        const passwordInput = $('#sign-password');
+        await usernameInput.waitForClickable();
+        await passwordInput.waitForClickable();
+        await usernameInput.click();
+        await usernameInput.setValue(username);
+        await passwordInput.click();
+        await passwordInput.setValue(password);
+
+        for (let attempt = 0; attempt < 3; attempt += 1) {
+            const currentUsername = await usernameInput.getValue();
+            const currentPassword = await passwordInput.getValue();
+            if (currentUsername === username && currentPassword === password) {
+                break;
+            }
+
+            if (currentUsername !== username) {
+                await usernameInput.click();
+                await usernameInput.setValue(username);
+            }
+            if (currentPassword !== password) {
+                await passwordInput.click();
+                await passwordInput.setValue(password);
+            }
+        }
+
+        await browser.waitUntil(async () => (
+            await usernameInput.getValue() === username
+            && await passwordInput.getValue() === password
+        ), {
+            timeout: 1000,
+            timeoutMsg: 'Sign-up form values were not entered before submitting.'
+        });
 
         const signupAlert = new Promise((resolve, reject) => {
             browser.once('dialog', async (dialog) => {
@@ -21,7 +53,9 @@ class HomePage {
             });
         });
 
-        await $('button=Sign up').click();
+        const signupButton = $('button=Sign up');
+        await signupButton.waitForClickable();
+        await signupButton.click();
         return signupAlert;
     }
 
