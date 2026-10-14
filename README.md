@@ -163,6 +163,7 @@ This command generates the report from `allure-results` and opens the report in 
 
 - Base URL is configured to: `https://www.demoblaze.com`
 - Test runner is set to local execution with a single Chrome instance.
+- Chrome runs with its UI visible by default.
 - The suite uses Mocha `describe` and `it` blocks for test organization.
 - Allure outputs are stored in `allure-results` and the generated HTML is under `allure-report`.
 
