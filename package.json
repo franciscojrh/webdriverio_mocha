@@ -12,7 +12,7 @@
   "scripts": {
     "wdio": "wdio run ./wdio.conf.js",
     "test": "npm run wdio",
-    "test:smoke": "wdio run ./wdio.conf.js --suite smoke",
+    "test:": "wdio run ./wdio.conf.js --suite smoke",
     "test:login": "wdio run ./wdio.conf.js --spec ./test/specs/login.e2e.js",
     "test:cart": "wdio run ./wdio.conf.js --spec ./test/specs/cart.e2e.js",
     "test:purchase": "wdio run ./wdio.conf.js --spec ./test/specs/purchase.e2e.js",
