@@ -4,10 +4,9 @@ export const config = {
     specs: ['./test/specs/**/*.e2e.js'],
 
     suites: {
-        smoke: ['./test/specs/login.e2e.js'],
         cart: ['./test/specs/cart.e2e.js'],
         purchase: ['./test/specs/purchase.e2e.js'],
-        userJourney: [
+        smoke: [
             './test/specs/login.e2e.js',
             './test/specs/cart.e2e.js',
             './test/specs/purchase.e2e.js'
