@@ -1,4 +1,16 @@
 class HomePage {
+    get usernameInput() {
+        return $('#sign-username');
+    }
+
+    get passwordInput() {
+        return $('#sign-password');
+    }
+
+    get signupButton() {
+        return $('button=Sign up');
+    }
+
     async open() {
         await browser.url('/index.html');
         await $('a=PRODUCT STORE').waitForDisplayed();
@@ -7,35 +19,33 @@ class HomePage {
     async createAccount(username, password) {
         await $('a=Sign up').click();
 
-        const usernameInput = $('#sign-username');
-        const passwordInput = $('#sign-password');
-        await usernameInput.waitForClickable();
-        await passwordInput.waitForClickable();
-        await usernameInput.click();
-        await usernameInput.setValue(username);
-        await passwordInput.click();
-        await passwordInput.setValue(password);
+        await this.usernameInput.waitForClickable();
+        await this.passwordInput.waitForClickable();
+        await this.usernameInput.click();
+        await this.usernameInput.setValue(username);
+        await this.passwordInput.click();
+        await this.passwordInput.setValue(password);
 
         for (let attempt = 0; attempt < 3; attempt += 1) {
-            const currentUsername = await usernameInput.getValue();
-            const currentPassword = await passwordInput.getValue();
+            const currentUsername = await this.usernameInput.getValue();
+            const currentPassword = await this.passwordInput.getValue();
             if (currentUsername === username && currentPassword === password) {
                 break;
             }
 
             if (currentUsername !== username) {
-                await usernameInput.click();
-                await usernameInput.setValue(username);
+                await this.usernameInput.click();
+                await this.usernameInput.setValue(username);
             }
             if (currentPassword !== password) {
-                await passwordInput.click();
-                await passwordInput.setValue(password);
+                await this.passwordInput.click();
+                await this.passwordInput.setValue(password);
             }
         }
 
         await browser.waitUntil(async () => (
-            await usernameInput.getValue() === username
-            && await passwordInput.getValue() === password
+            await this.usernameInput.getValue() === username
+            && await this.passwordInput.getValue() === password
         ), {
             timeout: 1000,
             timeoutMsg: 'Sign-up form values were not entered before submitting.'
@@ -53,9 +63,8 @@ class HomePage {
             });
         });
 
-        const signupButton = $('button=Sign up');
-        await signupButton.waitForClickable();
-        await signupButton.click();
+        await this.signupButton.waitForClickable();
+        await this.signupButton.click();
         return signupAlert;
     }
 
