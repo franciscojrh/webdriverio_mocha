@@ -3,6 +3,10 @@ class ProductPage {
         return $('h2');
     }
 
+    get addToCartButton() {
+        return $('a=Add to cart');
+    }
+
     async addToCart() {
         const productAlert = new Promise((resolve, reject) => {
             browser.once('dialog', async (dialog) => {
@@ -16,7 +20,7 @@ class ProductPage {
             });
         });
 
-        await $('a=Add to cart').click();
+        await this.addToCartButton.click();
         return productAlert;
     }
 }
